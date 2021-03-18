@@ -1,42 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import User from './User';
+import React, { useState } from 'react'
 
 const LoginForm = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [user, setUser] = useState([]);
+     const [loginForm, setLoginForm] = useState({
+          email: null,
+          password: null,
+     })
 
-	const handleUserEmail = (event) => {
-		event.preventDefault();
-		setEmail(event.target.value);
-	};
+     const handleLoginForm = (user) => {
+          if (user.email) {
+               setLoginForm((prevState) => ({
+                    ...prevState,
+                    email: user.email,
+               }))
+          }
+          if (user.password) {
+               setLoginForm((prevState) => ({
+                    ...prevState,
+                    password: user.password,
+               }))
+          }
+     }
 
-	const handleUserPass = (event) => {
-		event.preventDefault();
-		setPassword(event.target.value);
-	};
+     const handleEmailChange = (event) => {
+          handleLoginForm({ email: event.target.value })
+     }
 
-	const submitUser = (event) => {
-		event.preventDefault();
-		if (email !== '' && password !== '') {
-			setUser([...user, { email: email, password: password, id: Math.random() * 1000 }]);
-		} else {
-			return;
-		}
-		setEmail('');
-		setPassword('');
-	};
+     const handlePasswordChange = (event) => {
+          event.preventDefault()
+          handleLoginForm({ password: event.target.value })
+     }
 
-	return (
-		<div className="login-form">
-			<input placeholder="email" onChange={handleUserEmail} />
-			<input placeholder="password" onChange={handleUserPass} />
-			<button onClick={submitUser}>Submit</button>
-			{user.map((item) => {
-				return <User email={item.email} password={item.password} key={item.id} />;
-			})}
-		</div>
-	);
-};
+     const submitUser = (event) => {
+          event.preventDefault()
+          if (loginForm.email !== '' && loginForm.password !== '') {
+               console.log(`Email : ${loginForm.email}`)
+               console.log(`Password: ${loginForm.password}`)
+          } else {
+               return
+          }
+          setLoginForm({ email: '', password: '' })
+     }
 
-export default LoginForm;
+     return (
+          <div className="login-form">
+               <input
+                    value={loginForm.email}
+                    placeholder="email"
+                    onChange={handleEmailChange}
+               />
+               <input
+                    value={loginForm.password}
+                    placeholder="password"
+                    onChange={handlePasswordChange}
+               />
+               <button onClick={submitUser}>Submit</button>
+          </div>
+     )
+}
+
+export default LoginForm
