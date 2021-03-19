@@ -1,60 +1,66 @@
 import React, { useState } from 'react'
 
 const LoginForm = () => {
-     const [loginForm, setLoginForm] = useState({
-          email: null,
-          password: null,
+     const [user, setUser] = useState({
+          email: '',
+          password: '',
      })
 
-     const handleLoginForm = (user) => {
-          if (user.email) {
-               setLoginForm((prevState) => ({
-                    ...prevState,
-                    email: user.email,
-               }))
-          }
-          if (user.password) {
-               setLoginForm((prevState) => ({
-                    ...prevState,
-                    password: user.password,
-               }))
-          }
+     const handleUserEmail = (event) => {
+          setUser((prevState) => ({
+               ...prevState,
+               email: event.target.value,
+          }))
      }
 
-     const handleEmailChange = (event) => {
-          handleLoginForm({ email: event.target.value })
-     }
-
-     const handlePasswordChange = (event) => {
-          event.preventDefault()
-          handleLoginForm({ password: event.target.value })
+     const handleUserPassword = (event) => {
+          setUser((prevState) => ({
+               ...prevState,
+               password: event.target.value,
+          }))
      }
 
      const submitUser = (event) => {
           event.preventDefault()
-          if (loginForm.email !== '' && loginForm.password !== '') {
-               console.log(`Email : ${loginForm.email}`)
-               console.log(`Password: ${loginForm.password}`)
+          if (user.email !== '' && user.password !== '') {
+               console.log(`Email : ${user.email}`)
+               console.log(`Password: ${user.password}`)
           } else {
                return
           }
-          setLoginForm({ email: '', password: '' })
+          setUser({ email: '', password: '' })
      }
 
      return (
-          <div className="login-form">
-               <input
-                    value={loginForm.email}
-                    placeholder="email"
-                    onChange={handleEmailChange}
-               />
-               <input
-                    value={loginForm.password}
-                    placeholder="password"
-                    onChange={handlePasswordChange}
-               />
-               <button onClick={submitUser}>Submit</button>
-          </div>
+          <form>
+               <div className="login-form">
+                    <h1>Sign In :</h1>
+                    <div className="form-group">
+                         <lable>Email :</lable>
+                         <input
+                              value={user.email}
+                              placeholder="email"
+                              onChange={handleUserEmail}
+                              name="email"
+                              type="email"
+                         />
+                    </div>
+
+                    <div className="form-group">
+                         <lable>Password :</lable>
+                         <input
+                              value={user.password}
+                              placeholder="password"
+                              onChange={handleUserPassword}
+                              name="password"
+                              type="password"
+                         />
+                    </div>
+                    <button type="sumbit" onClick={submitUser}>
+                         Submit
+                    </button>
+               </div>
+          </form>
      )
 }
 
