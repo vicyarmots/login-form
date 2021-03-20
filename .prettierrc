@@ -1,6 +1,7 @@
 {
-     "trailingComa": "cs5",
-     "tabWidth": 5,
-     "semi": false,
-     "singleQuote": true
+  "trailingComa": "none",
+  "tabWidth": 4,
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 80
 }
