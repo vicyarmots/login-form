@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { logIn } from '../action/action'
 
 const LoginForm = () => {
     const [user, setUser] = useState({
@@ -6,15 +8,20 @@ const LoginForm = () => {
         password: '',
     })
 
+    const dispatch = useDispatch()
+    const isLogged = useSelector((state) => state.isLogged)
+
     const handleInputChange = ({ target }) => {
         setUser({ ...user, [target.name]: target.value })
     }
 
-    const disableCheck = Object.values(user).every((item) => item)
+    const isValid = Object.values(user).every((item) => item)
 
     const submitUser = (event) => {
         event.preventDefault()
-        console.log(user)
+        setTimeout(() => {
+            dispatch(logIn())
+        }, 5000)
         setUser({ email: '', password: '' })
     }
     return (
@@ -42,13 +49,10 @@ const LoginForm = () => {
                         type="password"
                     />
                 </div>
-                <button
-                    type="sumbit"
-                    onClick={submitUser}
-                    disabled={!disableCheck}
-                >
+                <button type="sumbit" onClick={submitUser} disabled={!isValid}>
                     Submit
                 </button>
+                {isLogged ? <h3>5 seconds left </h3> : ''}
             </div>
         </form>
     )
