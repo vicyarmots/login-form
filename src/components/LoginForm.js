@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { setLoggedIn } from '../Redux/user/middleware'
+import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
     const [user, setUser] = useState({
@@ -9,7 +10,6 @@ const LoginForm = () => {
     })
 
     const dispatch = useDispatch()
-    const isLogged = useSelector((state) => state)
 
     const handleInputChange = ({ target }) => {
         setUser({ ...user, [target.name]: target.value })
@@ -17,9 +17,12 @@ const LoginForm = () => {
 
     const isValid = Object.values(user).every((item) => item)
 
+    const history = useHistory()
+
     const submitUser = (event) => {
         event.preventDefault()
         dispatch(setLoggedIn(user.email))
+        history.push('/user')
         setUser({ email: '', password: '' })
     }
 
@@ -48,6 +51,7 @@ const LoginForm = () => {
                         type="password"
                     />
                 </div>
+
                 <button type="sumbit" onClick={submitUser} disabled={!isValid}>
                     Submit
                 </button>
