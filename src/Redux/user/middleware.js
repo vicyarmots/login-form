@@ -1,7 +1,7 @@
 import { logIn } from './action'
 
-export const isLoggedIn = () => (dispatch) => {
+export const setLoggedIn = (email) => (dispatch) => {
     setTimeout(() => {
-        dispatch(logIn())
-    }, 5000)
+        dispatch(logIn(email))
+    }, 2000)
 }

@@ -1,10 +1,17 @@
-const loggedReducer = (state = false, action) => {
+const initState = {
+    email: '',
+}
+
+const userReducer = (state = initState, action) => {
     switch (action.type) {
         case 'SIGN IN':
-            return !state
+            return {
+                ...state,
+                email: action.payload,
+            }
         default:
             return state
     }
 }
 
-export default loggedReducer
+export default userReducer

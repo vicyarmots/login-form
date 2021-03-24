@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
-import { isLoggedIn } from '../Redux/user/middleware'
+import { useSelector, useDispatch } from 'react-redux'
+import { setLoggedIn } from '../Redux/user/middleware'
+
 const LoginForm = () => {
     const [user, setUser] = useState({
         email: '',
         password: '',
     })
+
+    const dispatch = useDispatch()
+    const isLogged = useSelector((state) => state)
 
     const handleInputChange = ({ target }) => {
         setUser({ ...user, [target.name]: target.value })
@@ -14,9 +19,10 @@ const LoginForm = () => {
 
     const submitUser = (event) => {
         event.preventDefault()
-        isLoggedIn()
+        dispatch(setLoggedIn(user.email))
         setUser({ email: '', password: '' })
     }
+
     return (
         <form>
             <div className="login-form">
